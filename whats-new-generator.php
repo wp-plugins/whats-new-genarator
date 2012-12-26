@@ -35,7 +35,7 @@ class WhatsNewPlugin{
 	}
 
 	function on_print_styles() {
-		$cssPath = WP_PLUGIN_DIR . '/whats-new-generator/whats-new.css';
+		$cssPath = WP_PLUGIN_DIR . '/whats-new-genarator/whats-new.css';
 
 		/* CSSファイルが存在すれば、関数呼び出しでCSSを追加する */
 		if(file_exists($cssPath)){
