@@ -25,6 +25,11 @@ This plug-in creates the latest information of your site in the page by shortcod
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
+== Screenshots ==
+
+1. Latest information
+2. Admin page
+
 == Changelog ==
 
 = 1.3.0 =
