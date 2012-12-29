@@ -3,7 +3,7 @@
 Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.3.0
+Version: 1.4.0
 Author:WordPress Biz Plugin
 Author URI: http://residentbird.main.jp/bizplugin/
 */
@@ -62,6 +62,7 @@ class WhatsNewPlugin{
 					"wng_category_chk" => "",
 					"wng_category_name" => "",
 					"wng_background_color" => "#f5f5f5",
+					"wng_newmark" => "7",
 					"wng_number" => "10"
 			);
 			update_option($this->option_name, $arr);
@@ -69,7 +70,7 @@ class WhatsNewPlugin{
 	}
 
 	function on_admin_init() {
-		register_setting($this->option_name, $this->option_name);
+		register_setting($this->option_name, $this->option_name, array ( &$this, 'validate' ));
 		add_settings_section('main_section', '表示設定', array(&$this,'section_text_fn'), __FILE__);
 		add_settings_field('wng_title', 'タイトル', array(&$this,'setting_title'), __FILE__, 'main_section');
 		add_settings_field('wng_background_color', 'タイトル背景色', array(&$this,'setting_background_color'), __FILE__, 'main_section');
@@ -78,9 +79,19 @@ class WhatsNewPlugin{
 		add_settings_field('wng_category_name', '　カテゴリーのスラッグ', array(&$this,'setting_category_name'), __FILE__, 'main_section');
 		add_settings_field('wng_orderby', '表示順序', array(&$this,'setting_orderby'), __FILE__, 'main_section');
 		add_settings_field('wng_number', '表示件数', array(&$this,'setting_number'), __FILE__, 'main_section');
+		add_settings_field('wng_newmark', 'NEW!マーク表示期間', array(&$this,'setting_newmark'), __FILE__, 'main_section');
 		wp_register_style( 'whats-new-style', plugins_url('whats-new.css', __FILE__) );
 	}
 
+	function validate($input) {
+		if ( !is_numeric( $input['wng_newmark']) || $input['wng_newmark'] < 0){
+			$input['wng_newmark'] = 0;
+		}
+		if ($input['wng_newmark'] > 30 ){
+			$input['wng_newmark'] = 30;
+		}
+		return $input; // return validated input
+	}
 
 	public function on_admin_menu() {
 		$page = add_options_page("What's New 設定", "What's New 設定", 'administrator', __FILE__, array(&$this, 'show_admin_page'));
@@ -126,6 +137,12 @@ class WhatsNewPlugin{
 		echo "<input id='wng_background_color' name='whats_new_options[wng_background_color]' size='10' type='text' value='{$value}' />";
 	}
 
+	function setting_newmark() {
+		$options = get_option($this->option_name);
+		$value = esc_html( $options["wng_newmark"] );
+		echo "<input id='wng_newmark' name='whats_new_options[wng_newmark]' size='4' type='text' value='{$value}' />";
+	}
+
 
 	function setting_category_chk() {
 		$id = "wng_category_chk";
@@ -147,7 +164,7 @@ class WhatsNewPlugin{
 	// DROP-DOWN-BOX - Name: whats_new_options[dropdown1]
 	function  setting_number() {
 		$options = get_option($this->option_name);
-		$items = array("5", "10", "15", "20");
+		$items = array("3", "5", "7","10", "15", "20");
 		echo "<select id='wng_number' name='whats_new_options[wng_number]'>";
 		foreach($items as $item) {
 			$selected = ($options['wng_number']==$item) ? 'selected="selected"' : '';
@@ -199,10 +216,10 @@ class WhatsNewInfo{
 		$this->category_chk = isset($options['wng_category_chk']) ? $options['wng_category_chk'] : "";
 		$this->category_name = $options['wng_category_name'];
 		$this->background_color = $options['wng_background_color'];
-		$this->createWhatsNewItems();
+		$this->createWhatsNewItems( $option_name );
 	}
 
-	private function createWhatsNewItems(){
+	private function createWhatsNewItems($option_name){
 		$condition = array();
 		$condition['post_type'] = $this->content_type == '投稿' ? 'post' : 'page';
 		$condition['numberposts'] = $this->num;
@@ -217,7 +234,7 @@ class WhatsNewInfo{
 			return;
 		}
 		foreach($posts as $post){
-			$this->items[] = new WhatsNewItem($post, $this->orderby);
+			$this->items[] = new WhatsNewItem($post, $this->orderby ,$option_name );
 		}
 	}
 }
@@ -228,14 +245,32 @@ class WhatsNewInfo{
  */
 class WhatsNewItem{
 	var $date;
+	var $raw_date;
 	var $title;
 	var $url;
+	var $newmark;
 
-	public function __construct( $post, $orderby ){
-		$this->date = $orderby == '公開日順' ? $post->post_date : $post->post_modified;
-		$this->date = date("Y年n月j日", strtotime($this->date));
+	public function __construct( $post, $orderby, $option_name ){
+		$this->raw_date = $orderby == '公開日順' ? $post->post_date : $post->post_modified;
+		$this->date = date("Y年n月j日", strtotime($this->raw_date));
 		$this->title = esc_html( $post->post_title );
 		$this->url = get_permalink($post->ID);
+		$this->newmark = $this->is_new( $option_name );
+	}
+
+	public function is_new( $option_name ){
+		$options = get_option($option_name);
+		$term = $options['wng_newmark'];
+		if ( !isset($term) || $term == 0){
+			return false;
+		}
+		$today = date_i18n('U');
+		$post_date = date('U', strtotime($this->raw_date));
+		$diff = ( $today - $post_date ) / ( 24 * 60 * 60 );
+		if ($term > $diff){
+			return true;
+		}
+		return false;
 	}
 }
 ?>

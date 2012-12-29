@@ -1,10 +1,10 @@
 <div class='whatsnew'>
-	<h2
+	<p class='whatsnewtitle'
 	<?php if (!empty($info->background_color)){
 		echo "style='background-color: {$info->background_color};'";
     }?>>
 		<?php echo $info->title; ?>
-	</h2>
+	</p>
 
 	<dl>
 		<?php foreach($info->items as $item): ?>
@@ -12,6 +12,9 @@
 			<?php echo $item->date; ?>
 		</dt>
 		<dd>
+			<?php if ( $item->newmark ): ?>
+			<span class='newmark' >NEW!</span>
+			<?php endif; ?>
 			<a href="<?php echo $item->url; ?>"><?php echo $item->title; ?> </a>
 		</dd>
 		<?php endforeach; ?>
