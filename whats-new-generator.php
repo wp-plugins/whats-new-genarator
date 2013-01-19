@@ -3,7 +3,7 @@
 Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.4.0
+Version: 1.5.0
 Author:WordPress Biz Plugin
 Author URI: http://residentbird.main.jp/bizplugin/
 */
@@ -30,7 +30,6 @@ class WhatsNewPlugin{
 
 	function on_deactivation(){
 		unregister_setting($this->option_name, $this->option_name );
-		//delete_option($this->option_name);
 		wp_deregister_style('whats-new-style');
 	}
 
@@ -50,6 +49,8 @@ class WhatsNewPlugin{
 
 	function myplugin_admin_styles() {
 		wp_enqueue_style( 'whats-new-style' );
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'whats-new-admin-js', plugins_url('whats-new-admin.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 	}
 
 	function on_activation() {
@@ -84,6 +85,9 @@ class WhatsNewPlugin{
 	}
 
 	function validate($input) {
+		if(!preg_match('/^#[a-f0-9]{6}$/i', $input['wng_background_color'])){
+			$input['wng_background_color'] = "#f5f5f5";
+		}
 		if ( !is_numeric( $input['wng_newmark']) || $input['wng_newmark'] < 0){
 			$input['wng_newmark'] = 0;
 		}
@@ -140,7 +144,7 @@ class WhatsNewPlugin{
 	function setting_newmark() {
 		$options = get_option($this->option_name);
 		$value = esc_html( $options["wng_newmark"] );
-		echo "<input id='wng_newmark' name='whats_new_options[wng_newmark]' size='4' type='text' value='{$value}' />";
+		echo "<input id='wng_newmark' name='whats_new_options[wng_newmark]' size='2' type='text' value='{$value}' />日間";
 	}
 
 
