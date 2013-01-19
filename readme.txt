@@ -4,7 +4,7 @@ Donate link:
 Tags: what's new, update
 Requires at least: 3.4
 Tested up to: 3.5
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,23 +12,13 @@ This plug-in creates the latest information of your site in the page by shortcod
 
 == Description ==
 
-This plug-in creates the latest information of your site in the page by shortcode.
-
-= Features =
-
-* Select what's new from posts or pages
-* Select the number of what's new items
-* Preview what's new on admin page
-
-###日本語版
-
 What’s New Generatorは、投稿、固定ページ、ウィジェットに新着情報を表示するプラグインです。
 
 新着情報の日付、タイトルは自動的に表示されます。また、タイトルをクリックすると該当のページが開きます。
 
 = 特徴 =
 
-* 期間を指定してタイトルにNEW！マークを表示させることができます。
+* 期間を指定してタイトルにNEW!マークを表示させることができます。
 * 新着情報に表示するコンテンツに投稿または固定ページを設定できます。
 * 表示する件数を設定できます。
 * 表示順序は、公開日順・更新日順から選択できます。
@@ -49,23 +39,10 @@ What’s New Generatorは、投稿、固定ページ、ウィジェットに新�
 
 == Changelog ==
 
-= 1.4.0 =
-* Added NEW! mark
+= 1.5.0 =
+* 新着一覧のタイトル背景色にcolor pickerを追加 ( WordPress 3.5以上 )
+* NEWマークデザイン変更
 
-= 1.3.0 =
-* Added filter fook for widget
-
-= 1.2.0 =
-* Added feature to change a background color
-
-= 1.1.0 =
-* Added categories option
-* Changed styles of what's new
-
-= 1.0.0 =
-* First release.
-
-###日本語版
 = 1.4.0 =
 * NEWマーク表示機能追加
 
