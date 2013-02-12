@@ -3,7 +3,7 @@
 Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.5.0
+Version: 1.6.0
 Author:WordPress Biz Plugin
 Author URI: http://residentbird.main.jp/bizplugin/
 */
@@ -180,7 +180,7 @@ class WhatsNewPlugin{
 	// RADIO-BUTTON - Name: whats_new_options[option_set1]
 	function setting_content_type() {
 		$options = get_option($this->option_name);
-		$items = array("投稿", "固定ページ");
+		$items = array("投稿", "固定ページ", "投稿＋固定ページ");
 		foreach($items as $item) {
 			$checked = ($options['wng_content_type']==$item) ? ' checked="checked" ' : '';
 			echo "<label><input ".$checked." value='$item' name='whats_new_options[wng_content_type]' type='radio' /> $item</label><br />";
@@ -225,7 +225,13 @@ class WhatsNewInfo{
 
 	private function createWhatsNewItems($option_name){
 		$condition = array();
-		$condition['post_type'] = $this->content_type == '投稿' ? 'post' : 'page';
+		if ( $this->content_type == '投稿'){
+			$condition['post_type'] = 'post';
+		}else if ( $this->content_type == '固定ページ' ){
+			$condition['post_type'] = 'page';
+		}else{
+			$condition['post_type'] = array('page', 'post');
+		}
 		$condition['numberposts'] = $this->num;
 		$condition['order'] = 'desc';
 		$condition['orderby'] = $this->orderby == '公開日順' ? 'post_date' : 'modified';
