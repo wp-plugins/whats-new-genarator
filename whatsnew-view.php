@@ -1,10 +1,16 @@
 <div class='whatsnew'>
-	<p class='whatsnewtitle'
-	<?php if (!empty($info->background_color)){
+	<div class='whatsnewtitle' <?php if (!empty($info->background_color)){
 		echo "style='background-color: {$info->background_color};'";
     }?>>
-		<?php echo $info->title; ?>
-	</p>
+		<div class='wntitle'>
+			<?php echo $info->title; ?>
+		</div>
+		<?php if (!empty($info->postlist_url)): ?>
+		<div class='all-post'>
+			<a href="<?php echo $info->postlist_url; ?>">一覧へ</a>
+		</div>
+		<?php endif; ?>
+	</div>
 
 	<dl>
 		<?php foreach($info->items as $item): ?>
@@ -13,7 +19,7 @@
 		</dt>
 		<dd>
 			<?php if ( $item->newmark ): ?>
-			<span class='newmark' >NEW!</span>
+			<span class='newmark'>NEW!</span>
 			<?php endif; ?>
 			<a href="<?php echo $item->url; ?>"><?php echo $item->title; ?> </a>
 		</dd>

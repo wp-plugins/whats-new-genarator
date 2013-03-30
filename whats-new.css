@@ -10,9 +10,7 @@ div.whatsnew {
 	font-size: 100%;
 }
 
-p.whatsnewtitle {
-	font-weight: bold;
-	font-size: 110%;
+div.whatsnewtitle {
 	margin: 0;
 	padding: 5px 10px;
 	background-color: WhiteSmoke;
@@ -29,6 +27,33 @@ p.whatsnewtitle {
     -moz-border-radius-topright: 5px; /* 右上 */
 }
 
+div.wntitle {
+	font-weight: bold;
+	font-size: 100%;
+	text-align: left;
+	float:left;
+}
+
+div.all-post {
+	background: transparent url('./image/list.png') left center no-repeat;
+	padding-left:1.3em;
+	font-weight: normal;
+	font-size: 90%;
+	text-align: right;
+	cursor: pointer;
+	float:right;
+}
+
+
+div.whatsnew dd:after, div.whatsnewtitle:after {
+    content: "";
+    clear: both;
+    height: 0;
+    display: block;
+    visibility: hidden;
+}
+
+
 div.whatsnew dl {
 	margin: 5px 0;
 	padding: 0;
@@ -36,11 +61,11 @@ div.whatsnew dl {
 }
 
 div.whatsnew dt {
-	margin: 0 7px;
+	margin: 0 0 0 0.5em;
 	padding: 0;
 	border: 0;
 	float: left;
-	width: 8em;
+	width: 8.5em;
 	font-weight: normal;
 }
 
