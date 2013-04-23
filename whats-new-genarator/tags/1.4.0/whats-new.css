@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+
+div.whatsnew {
+	margin:10px 0;
+	background-color: White;
+	border-radius: 5px;        /* CSS3 */
+	-webkit-border-radius: 5px;    /* Safari,Google Chrome */
+	-moz-border-radius: 5px;   /* Firefox */
+	border: 1px Silver solid;
+	font-size: 100%;
+}
+
+p.whatsnewtitle {
+	font-weight: bold;
+	font-size: 110%;
+	margin: 0;
+	padding: 5px 10px;
+	background-color: WhiteSmoke;
+	box-shadow:  1px 1px 4px #ccc;
+	-webkit-box-shadow:  1px 1px 4px #ccc;
+	-moz-box-shadow:  1px 1px 4px #ccc;
+	border: 0;
+	border-bottom: 1px Silver solid;
+	border-top-left-radius: 5px;  /* 左上 */
+	border-top-right-radius: 5px; /* 右上 */
+	-webkit-border-top-left-radius: 5px;  /* 左上 */
+	-webkit-border-top-right-radius: 5px; /* 右上 */
+    -moz-border-radius-topleft: 5px;  /* 左上 */
+    -moz-border-radius-topright: 5px; /* 右上 */
+}
+
+div.whatsnew dl {
+	margin: 5px 0;
+	padding: 0;
+	border: 0;
+}
+
+div.whatsnew dt {
+	margin: 0 7px;
+	padding: 0;
+	border: 0;
+	float: left;
+	width: 8em;
+	font-weight: normal;
+}
+
+div.whatsnew dd {
+	margin: 0;
+	padding: 0 0 0 9em;
+}
+
+.newmark {
+	font-size: 74%;
+	vertical-align:middle;
+	color: White;
+	background-color: #ff4500;
+	padding: 1px 5px;
+	border-radius: 3px; /* CSS3 */
+	-webkit-border-radius: 3px; /* Safari,Google Chrome */
+	-moz-border-radius: 3px; /* Firefox */
+}
