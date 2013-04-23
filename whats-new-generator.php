@@ -3,7 +3,7 @@
  Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.7.0
+Version: 1.8.0
 Author:WordPress Biz Plugin
 Author URI: http://residentbird.main.jp/bizplugin/
 */
@@ -68,6 +68,7 @@ class WhatsNewPlugin{
 				"wng_background_color" => "#f5f5f5",
 				"wng_newmark" => "7",
 				"wng_postlist_url" => "",
+				"wng_dateformat" => "Y年n月j日",
 				"wng_number" => "10"
 		);
 		WNG::update_option( $arr );
@@ -157,7 +158,8 @@ class WhatsNewItem{
 		$options = WNG::get_option();
 		$orderby = $options['wng_orderby'];
 		$this->raw_date = $orderby == '公開日順' ? $post->post_date : $post->post_modified;
-		$this->date = date("Y年n月j日", strtotime($this->raw_date));
+		$dateformat = empty($options['wng_dateformat']) ? "Y年n月j日" : $options['wng_dateformat'];
+		$this->date = date($dateformat, strtotime($this->raw_date));
 		$this->title = esc_html( $post->post_title );
 		$this->url = get_permalink($post->ID);
 		$this->newmark = $this->is_new();

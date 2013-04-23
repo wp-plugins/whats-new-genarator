@@ -8,6 +8,8 @@ div.whatsnew {
 	-moz-border-radius: 5px;   /* Firefox */
 	border: 1px Silver solid;
 	font-size: 100%;
+	word-break:break-all;
+	overflow: hidden;
 }
 
 div.whatsnewtitle {
@@ -61,11 +63,11 @@ div.whatsnew dl {
 }
 
 div.whatsnew dt {
-	margin: 0 0 0 0.5em;
+	margin: 0 0 0 0.3em;
 	padding: 0;
 	border: 0;
 	float: left;
-	width: 8.5em;
+	width: 8.7em;
 	font-weight: normal;
 }
 

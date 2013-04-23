@@ -4,7 +4,7 @@ Donate link:
 Tags: what's new, update Post page
 Requires at least: 3.4
 Tested up to: 3.5.1
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,9 @@ What’s New Generatorは、投稿、固定ページ、ウィジェットに新�
 2. Admin page
 
 == Changelog ==
+
+= 1.8.0 =
+* 新着一覧の日付のフォーマットを設定する機能を追加
 
 = 1.7.0 =
 * 新着一覧のタイトルに記事一覧へのリンクを表示する機能を追加

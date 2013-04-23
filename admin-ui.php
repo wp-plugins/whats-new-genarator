@@ -18,6 +18,7 @@ class WNGAdminUi {
 		add_settings_field('wng_orderby', '表示順序', array(&$this,'setting_orderby'), $this->file_path, 'main_section');
 		add_settings_field('wng_number', '表示件数', array(&$this,'setting_number'), $this->file_path, 'main_section');
 		add_settings_field('wng_newmark', 'NEW!マーク表示期間', array(&$this,'setting_newmark'), $this->file_path, 'main_section');
+		add_settings_field('wng_dateformat', '日付のフォーマット', array(&$this,'setting_dateformat'), $this->file_path, 'main_section');
 		add_settings_field('wng_postlist_url', '一覧ページのurl', array(&$this,'setting_postlist_url'), $this->file_path, 'main_section');
 	}
 
@@ -108,5 +109,16 @@ class WNGAdminUi {
 			$checked = ($options['wng_orderby']==$item) ? ' checked="checked" ' : '';
 			echo "<label><input {$checked} value='{$item}' name='whats_new_options[wng_orderby]' type='radio' /> $item</label><br />";
 		}
+	}
+
+	function setting_dateformat() {
+		$options = WNG::get_option();
+		$items = array("Y年n月j日", "Y-m-d", "Y/m/d", "j/n/Y", "n/j/Y");
+		echo "<select id='wng_dateformat' name='whats_new_options[wng_dateformat]'>";
+		foreach($items as $item) {
+			$selected = ($options['wng_dateformat']==$item) ? 'selected="selected"' : '';
+			echo "<option value='$item' $selected>$item</option>";
+		}
+		echo "</select>";
 	}
 }
