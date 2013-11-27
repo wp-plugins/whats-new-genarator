@@ -3,12 +3,12 @@
  Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.8.0
+Version: 1.9.0
 Author:WordPress Biz Plugin
 Author URI: http://residentbird.main.jp/bizplugin/
 */
 
-include_once "admin-ui.php";
+include_once( dirname(__FILE__) . "/admin-ui.php" );
 new WhatsNewPlugin();
 
 class WNG
@@ -66,6 +66,7 @@ class WhatsNewPlugin{
 				"wng_orderby" => "公開日順",
 				"wng_category_name" => "",
 				"wng_background_color" => "#f5f5f5",
+				"wng_font_color" => "#000000",
 				"wng_newmark" => "7",
 				"wng_postlist_url" => "",
 				"wng_dateformat" => "Y年n月j日",
@@ -92,7 +93,7 @@ class WhatsNewPlugin{
 
 	function show_whatsnew(){
 		$info = new WhatsNewInfo();
-		include('whatsnew-view.php');
+		include( dirname(__FILE__) . '/whatsnew-view.php');
 	}
 
 	function show_shortcode(){
@@ -117,7 +118,8 @@ class WhatsNewInfo{
 	public function __construct(){
 		$options = WNG::get_option();
 		$this->title = esc_html( $options['wng_title'] );
-		$this->background_color = $options['wng_background_color'];
+		$this->background_color = isset($options['wng_background_color']) ? $options['wng_background_color'] : "#f5f5f5";
+		$this->font_color = isset($options['wng_font_color']) ? $options['wng_font_color'] : "#000000";
 		$this->postlist_url = $options['wng_postlist_url'];
 
 		$condition = array();

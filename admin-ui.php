@@ -13,6 +13,7 @@ class WNGAdminUi {
 		add_settings_section('main_section', '表示設定', array(&$this,'section_text_fn'), $this->file_path);
 		add_settings_field('wng_title', 'タイトル', array(&$this,'setting_title'), $this->file_path, 'main_section');
 		add_settings_field('wng_background_color', 'タイトル背景色', array(&$this,'setting_background_color'), $this->file_path, 'main_section');
+		add_settings_field('wng_font_color', 'タイトル文字色', array(&$this,'setting_font_color'), $this->file_path, 'main_section');
 		add_settings_field('wng_content_type', '表示するコンテンツ', array(&$this,'setting_content_type'), $this->file_path, 'main_section');
 		add_settings_field('wng_category_name', 'カテゴリーのスラッグ', array(&$this,'setting_category_name'), $this->file_path, 'main_section');
 		add_settings_field('wng_orderby', '表示順序', array(&$this,'setting_orderby'), $this->file_path, 'main_section');
@@ -26,12 +27,15 @@ class WNGAdminUi {
 		$file = $this->file_path;
 		$option_name = WNG::OPTIONS;
 		$shortcode = "[" . WNG::SHORTCODE . "]";
-		include_once('admin-view.php');
+		include_once( dirname(__FILE__) . '/admin-view.php');
 		$info = new WhatsNewInfo();
-		include_once('whatsnew-view.php');
+		include_once( dirname(__FILE__) . '/whatsnew-view.php');
 	}
 
 	function validate($input) {
+		if(!preg_match('/^#[a-f0-9]{6}$/i', $input['wng_font_color'])){
+			$input['wng_font_color'] = "#000";
+		}
 		if(!preg_match('/^#[a-f0-9]{6}$/i', $input['wng_background_color'])){
 			$input['wng_background_color'] = "#f5f5f5";
 		}
@@ -67,6 +71,12 @@ class WNGAdminUi {
 		$options = WNG::get_option();
 		$value = $options["wng_background_color"];
 		echo "<input id='wng_background_color' name='whats_new_options[wng_background_color]' size='10' type='text' value='{$value}' />";
+	}
+
+	function setting_font_color() {
+		$options = WNG::get_option();
+		$value = $options["wng_font_color"];
+		echo "<input id='wng_font_color' name='whats_new_options[wng_font_color]' size='10' type='text' value='{$value}' />";
 	}
 
 	function setting_newmark() {
