@@ -3,8 +3,8 @@ Contributors: WordPress BizPlugin
 Donate link:
 Tags: what's new, update Post page
 Requires at least: 3.5
-Tested up to: 3.7.1
-Stable tag: 1.9.0
+Tested up to: 3.8.1
+Stable tag: 1.10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,9 @@ What’s New Generatorは、投稿、固定ページ、ウィジェットに新�
 2. Admin page
 
 == Changelog ==
+
+= 1.10.0 =
+* 最新記事にNEW!マークをつける機能追加
 
 = 1.9.0 =
 * 新着一覧のタイトル文字色を設定する機能追加

@@ -3,7 +3,7 @@
  Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.9.0
+Version: 1.10.0
 Author:WordPress Biz Plugin
 Author URI: http://residentbird.main.jp/bizplugin/
 */
@@ -13,6 +13,7 @@ new WhatsNewPlugin();
 
 class WNG
 {
+	const VERSION = "1.10.0";
 	const SHORTCODE = "showwhatsnew";
 	const OPTIONS = "whats_new_options";
 
@@ -28,13 +29,13 @@ class WNG
 	}
 
 	public static function enqueue_css_js(){
-		wp_enqueue_style( 'whats-new-style', plugins_url('whats-new.css', __FILE__ ) );
+		wp_enqueue_style( 'whats-new-style', plugins_url('whats-new.css', __FILE__ ), array(), self::VERSION );
 	}
 
 	public static function enqueue_admin_css_js(){
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_style( 'whats-new-style', plugins_url('whats-new.css', __FILE__ ) );
-		wp_enqueue_script( 'whats-new-admin-js', plugins_url('whats-new-admin.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+		wp_enqueue_style( 'whats-new-style', plugins_url('whats-new.css', __FILE__ ), array(), self::VERSION);
+		wp_enqueue_script( 'whats-new-admin-js', plugins_url('whats-new-admin.js', __FILE__ ), array( 'wp-color-picker' ), self::VERSION, true );
 	}
 }
 
@@ -70,7 +71,8 @@ class WhatsNewPlugin{
 				"wng_newmark" => "7",
 				"wng_postlist_url" => "",
 				"wng_dateformat" => "Y年n月j日",
-				"wng_number" => "10"
+				"wng_number" => "10",
+				"wng_latest_new" => false
 		);
 		WNG::update_option( $arr );
 	}
@@ -155,6 +157,7 @@ class WhatsNewItem{
 	var $title;
 	var $url;
 	var $newmark;
+	private static $number = 0;
 
 	public function __construct( $post ){
 		$options = WNG::get_option();
@@ -165,10 +168,14 @@ class WhatsNewItem{
 		$this->title = esc_html( $post->post_title );
 		$this->url = get_permalink($post->ID);
 		$this->newmark = $this->is_new();
+		self::$number++;
 	}
 
 	public function is_new(){
 		$options = WNG::get_option();
+		if ( isset($options['wng_latest_new']) && self::$number == 0){
+			return true;
+		}
 		$term = $options['wng_newmark'];
 		if ( !isset($term) || $term == 0){
 			return false;

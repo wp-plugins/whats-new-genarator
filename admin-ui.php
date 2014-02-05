@@ -19,6 +19,7 @@ class WNGAdminUi {
 		add_settings_field('wng_orderby', '表示順序', array(&$this,'setting_orderby'), $this->file_path, 'main_section');
 		add_settings_field('wng_number', '表示件数', array(&$this,'setting_number'), $this->file_path, 'main_section');
 		add_settings_field('wng_newmark', 'NEW!マーク表示期間', array(&$this,'setting_newmark'), $this->file_path, 'main_section');
+		add_settings_field('wng_latest_new', '最新記事にNEW!マークをつける', array(&$this,'setting_latest_new'), $this->file_path, 'main_section');
 		add_settings_field('wng_dateformat', '日付のフォーマット', array(&$this,'setting_dateformat'), $this->file_path, 'main_section');
 		add_settings_field('wng_postlist_url', '一覧ページのurl', array(&$this,'setting_postlist_url'), $this->file_path, 'main_section');
 	}
@@ -85,12 +86,17 @@ class WNGAdminUi {
 		echo "<input id='wng_newmark' name='whats_new_options[wng_newmark]' size='2' type='text' value='{$value}' />日間";
 	}
 
+	function setting_latest_new() {
+		$options = WNG::get_option();
+		$checked = (isset($options["wng_latest_new"]) && $options["wng_latest_new"]) ? $checked = ' checked="checked" ': "";
+		echo "<input id='wng_latest_new' name='whats_new_options[wng_latest_new]' type='checkbox' '{$checked}' />";
+	}
+
 	function setting_category_name() {
 		$options = WNG::get_option();
 		$value = $options["wng_category_name"];
 		echo "<input id='wng_category_name' name='whats_new_options[wng_category_name]' size='40' type='text' value='{$value}' />";
 	}
-
 
 	function  setting_number() {
 		$options = WNG::get_option();
