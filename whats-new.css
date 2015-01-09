@@ -33,15 +33,16 @@ div.wn-head .wn-title {
   text-align: left;
   float: left;
   overflow: hidden;
+  width: auto;
 }
 div.wn-head .wn-postlist {
   background: transparent url("./image/list.png") left center no-repeat;
-  padding-left: 1.3em;
   font-weight: normal;
   font-size: 90%;
   text-align: right;
   cursor: pointer;
   float: right;
+  width: 4em;
 }
 
 div.wn-item {
@@ -55,12 +56,13 @@ div.wn-item .wn-date {
   padding: 0;
   border: 0;
   float: left;
-  width: 8.7em;
+  width: 8.1em;
   font-weight: normal;
   overflow: hidden;
+  white-space: nowrap;
 }
 div.wn-item .wn-article {
-  margin: 0;
+  margin: 0 0 0 8.1em;
   padding: 0 2px;
   overflow: hidden;
 }

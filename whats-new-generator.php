@@ -3,8 +3,8 @@
  Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.10.0
-Author:WordPress Biz Plugin
+Version: 1.11.0
+Author:Hideki Tanaka
 Author URI: http://residentbird.main.jp/bizplugin/
 */
 
@@ -13,7 +13,7 @@ new WhatsNewPlugin();
 
 class WNG
 {
-	const VERSION = "1.10.0";
+	const VERSION = "1.11.0";
 	const SHORTCODE = "showwhatsnew";
 	const OPTIONS = "whats_new_options";
 
@@ -51,7 +51,7 @@ class WhatsNewPlugin{
 		register_activation_hook(__FILE__, array(&$this,'on_activation'));
 		add_action( 'admin_init', array(&$this,'on_admin_init') );
 		add_action( 'admin_menu', array(&$this, 'on_admin_menu'));
-		add_action( 'wp_enqueue_scripts', array(&$this,'on_enqueue_scripts'));
+		add_action( 'wp_enqueue_scripts', array(&$this,'on_enqueue_css_js'));
 		add_shortcode( WNG::SHORTCODE, array(&$this,'show_shortcode'));
 		add_filter( 'widget_text', 'do_shortcode');
 	}
@@ -86,7 +86,7 @@ class WhatsNewPlugin{
 		add_options_page("What's New 設定", "What's New 設定", 'administrator', __FILE__, array(&$this->adminUi, 'show_admin_page'));
 	}
 
-	function on_enqueue_scripts() {
+	function on_enqueue_css_js() {
 		if ( is_admin() ){
 			return;
 		}
@@ -122,7 +122,7 @@ class WhatsNewInfo{
 		$this->title = esc_html( $options['wng_title'] );
 		$this->background_color = isset($options['wng_background_color']) ? $options['wng_background_color'] : "#f5f5f5";
 		$this->font_color = isset($options['wng_font_color']) ? $options['wng_font_color'] : "#000000";
-		$this->postlist_url = $options['wng_postlist_url'];
+		$this->postlist_url = esc_url( $options['wng_postlist_url'] );
 
 		$condition = array();
 		if ( $options['wng_content_type'] == '投稿'){
