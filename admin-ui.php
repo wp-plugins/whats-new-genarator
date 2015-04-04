@@ -33,18 +33,21 @@ class WNGAdminUi {
 		include_once( dirname(__FILE__) . '/whatsnew-view.php');
 	}
 
+	private function is_color( $code ) {
+		if( preg_match('/^#[a-f0-9]{6}$/i', $code ) ){
+			return true;
+		}
+		return false;
+	}
+
 	function validate($input) {
-		if(!preg_match('/^#[a-f0-9]{6}$/i', $input['wng_font_color'])){
-			$input['wng_font_color'] = "#000";
+		$this->is_color( $input['wng_font_color'] ) or $input['wng_font_color'] = "#000";
+		$this->is_color( $input['wng_background_color'] ) or $input['wng_background_color'] = "#f1f5f5";
+		if ( !is_numeric( $input['wng_number']) || $input['wng_number'] < 1 || $input['wng_number'] > 30){
+			$input['wng_number'] = 10;
 		}
-		if(!preg_match('/^#[a-f0-9]{6}$/i', $input['wng_background_color'])){
-			$input['wng_background_color'] = "#f5f5f5";
-		}
-		if ( !is_numeric( $input['wng_newmark']) || $input['wng_newmark'] < 0){
+		if ( !is_numeric( $input['wng_newmark']) || $input['wng_newmark'] < 0 || $input['wng_newmark'] > 30){
 			$input['wng_newmark'] = 0;
-		}
-		if ($input['wng_newmark'] > 30 ){
-			$input['wng_newmark'] = 30;
 		}
 		$input['wng_title'] = esc_html( $input['wng_title'] );
 		$input['wng_category_name'] = trim(esc_html( $input['wng_category_name'] ));
@@ -100,13 +103,8 @@ class WNGAdminUi {
 
 	function  setting_number() {
 		$options = WNG::get_option();
-		$items = array("3", "5", "7","10", "15", "20");
-		echo "<select id='wng_number' name='whats_new_options[wng_number]'>";
-		foreach($items as $item) {
-			$selected = ($options['wng_number']==$item) ? 'selected="selected"' : '';
-			echo "<option value='$item' $selected>$item</option>";
-		}
-		echo "</select>";
+		$value = $options["wng_number"];
+		echo "<input id='wng_number' name='whats_new_options[wng_number]' size='2' type='text' value='{$value}' />個";
 	}
 
 	function setting_content_type() {
