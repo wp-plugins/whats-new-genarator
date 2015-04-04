@@ -3,7 +3,7 @@
  Plugin Name: What's New Generator
 Plugin URI: http://residentbird.main.jp/bizplugin/
 Description: What's New(新着情報)を指定した固定ページや投稿に自動的に表示するプラグインです。
-Version: 1.11.0
+Version: 1.11.1
 Author:Hideki Tanaka
 Author URI: http://residentbird.main.jp/bizplugin/
 */
@@ -13,7 +13,7 @@ new WhatsNewPlugin();
 
 class WNG
 {
-	const VERSION = "1.11.0";
+	const VERSION = "1.11.1";
 	const SHORTCODE = "showwhatsnew";
 	const OPTIONS = "whats_new_options";
 

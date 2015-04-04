@@ -1,14 +1,14 @@
 <div class='whatsnew'>
 	<div class='wn-head'
 	<?php echo "style='background-color: {$info->background_color}; color : {$info->font_color};'" ; ?>>
-		<div class='wn-title'>
-			<?php echo $info->title; ?>
-		</div>
 		<?php if (!empty($info->postlist_url)): ?>
 		<div class='wn-postlist'>
 			<a href="<?php echo $info->postlist_url; ?>">一覧へ</a>
 		</div>
 		<?php endif; ?>
+		<div class='wn-title'>
+			<?php echo $info->title; ?>
+		</div>
 	</div>
 	<?php foreach($info->items as $item): ?>
 	<div class='wn-item'>
